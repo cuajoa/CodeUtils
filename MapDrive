@@ -1,0 +1,20 @@
+REM @echo Create new F: drive mapping
+REM @net use F: \\v12webfondos\fondosnet /persistent:yes
+
+@echo Create new H: drive mapping
+@net use H: \\192.168.181.62\descargas /persistent:yes
+
+@echo Create new W: drive mapping
+@net use W: \\server8\Fondos_Net_Backup /persistent:yes
+
+@echo Create new X: drive mapping
+@net use X: \\server20\VFNet /persistent:yes
+
+@echo Create new Y: drive mapping
+@net use Y: \\server20\vfhome /persistent:yes
+
+@echo Create new Z: drive mapping
+@net use Z: \\server20\visualfondos /persistent:yes
+
+:exit
+@pause

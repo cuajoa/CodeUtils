@@ -1,0 +1,52 @@
+Consulta el fondo: https://api.cafci.org.ar/fondo/:idCAFCI{787}
+Consulta todas las clases del fondo: https://api.cafci.org.ar/fondo/787/clase
+
+https://api.cafci.org.ar/fondo/:idCAFCI/clase/:idCAFCI/ficha --> retorna la info de la clase
+https://api.cafci.org.ar/fondo/:idCAFCI/clase/:idCAFCI
+
+Ejemplo: https://api.cafci.org.ar/fondo/787/clase/1785/ficha
+Contiene info completa del fondo y clase y posee la composición de la cartera
+
+Rendimiento de un fondo y clase entre dos fechas:
+https://api.cafci.org.ar/fondo/759/clase/1682/rendimiento/2020-07-16/2020-08-16?step=1 --> Step indica cada cuantos días se van a ver
+
+https://api.cafci.org.ar/estadisticas/cantidad/fondos
+https://api.cafci.org.ar/estadisticas/cantidad/asociadas
+https://api.cafci.org.ar/estadisticas/resumen/patrimonial/yyyy-MM-dd
+https://api.cafci.org.ar/estadisticas/informacion/diaria/tipo-rent/yyyy-MM-dd?exists=true
+https://api.cafci.org.ar/interfaz/semanal/resumen/cartera/8644 (interfaz??? no es id fondo)
+https://api.cafci.org.ar/interfaz/semanal/resumen/cartera/1250837
+
+::: Consultas base :::
+
+https://api.cafci.org.ar/fondo
+https://api.cafci.org.ar/fondo/tipo-clase
+https://api.cafci.org.ar/moneda
+https://api.cafci.org.ar/pais
+https://api.cafci.org.ar/horizonte
+https://api.cafci.org.ar/region
+https://api.cafci.org.ar/duration
+https://api.cafci.org.ar/actividad
+https://api.cafci.org.ar/benchmark
+https://api.cafci.org.ar/entidad
+https://api.cafci.org.ar/feriado?limit=0
+https://api.cafci.org.ar/tipo-renta
+
+
+https://api.cafci.org.ar/entidad?tipos=3 --SG
+https://api.cafci.org.ar/entidad?tipos=4 --SD
+https://api.cafci.org.ar/entidad?tipos=6 --AG Coloc
+https://api.cafci.org.ar/entidad?tipos=12 --Calificadoras
+
+::: REPORTES :::
+
+https://api.cafci.org.ar/fondo?page=1
+https://api.cafci.org.ar/fondo?estado=[1,2,4,5,6] Estado=1 --Activos?
+https://api.cafci.org.ar/fondo?benchmarkId=10
+https://api.cafci.org.ar/fondo?monedaId=1
+https://api.cafci.org.ar/fondo?monedaId=2
+
+https://api.cafci.org.ar/fondo?benchmarkId=10&estado=1&include=entidad;depositaria,entidad;gerente,tipoRenta,region,benchmark,horizonte,duration,tipo_fondo,clase_fondo&limit=0&order=clase_fondos.nombre&regionId=1
+
+https://api.cafci.org.ar/fondo?estado=1&include=entidad;depositaria,entidad;gerente,tipoRenta,region,benchmark,clase_fondo&limit=0
+Listado de fondos que incluye entidad, depositaria, gerente, tipo de renta, región y benchmark

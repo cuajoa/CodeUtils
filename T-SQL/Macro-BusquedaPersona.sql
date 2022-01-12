@@ -1,0 +1,8 @@
+
+UPDATE PARAMETROS
+SET
+ValorBoolean=0
+WHERE CodParametro='CPTXDC'
+
+SELECT * FROM PARAMETROS
+ORDER BY TituloParam

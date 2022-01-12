@@ -1,0 +1,1 @@
+delete appENTFILTROSUSER WHERE CodEntidad = 124

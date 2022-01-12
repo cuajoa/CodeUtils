@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Axios Pruebas</title>
+    <script>
+        // makeRequest();
+
+        function soap() {
+
+            //var symbol = "MSFT";
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", "https://svcvf.ad-cap.com.ar/Reportes.svc?wsdl", true);
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4) {
+                    alert(xmlhttp.responseText);
+                    // http://www.terracoder.com convert XML to JSON 
+                    var json = XMLObjectifier.xmlToJSON(xmlhttp.responseXML);
+                    var result = json.Body[0].GetQuoteResponse[0].GetQuoteResult[0].Text;
+                    // Result text is escaped XML string, convert string to XML object then convert to JSON object
+                    json = XMLObjectifier.xmlToJSON(XMLObjectifier.textToXML(result));
+                    alert(symbol + ' Stock Quote: $' + json.Stock[0].Last[0].Text);
+                }
+            }
+            xmlhttp.setRequestHeader("SOAPAction", "https://svcvf.ad-cap.com.ar/Reportes.svc");
+            xmlhttp.setRequestHeader("Content-Type", "text/xml");
+            xmlhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+
+            // build SOAP request
+            var sr =
+                '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/" xmlns:vf="http://schemas.datacontract.org/2004/07/VF.ServiceLayer.Model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
+                '  <soapenv:Header>' +
+                '      <tem:AuthenticationInfo>' +
+                '          <UserID>USUARIOACSA</UserID>' +
+                '          <Password>acsa123456</Password>' +
+                '      </tem:AuthenticationInfo>' +
+                '  </soapenv:Header>' +
+                '  <soapenv:Body>' +
+                '      <tem:MFCICheck_Solicitudes>' +
+                '          <tem:pReporteMFCICheckRequest>' +
+                '              <vf:FechaDesde  xsi:nil="true"></vf:FechaDesde>' +
+                '              <vf:FechaHasta xsi:nil="true">2020-04-17</vf:FechaHasta>' +
+                '              <vf:NumCuotapartista xsi:nil="true">430</vf:NumCuotapartista>' +
+                '          </tem:pReporteMFCICheckRequest>' +
+                '      </tem:MFCICheck_Solicitudes>' +
+                '  </soapenv:Body>' +
+                '  </soapenv:Envelope>';
+
+            xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4) {
+                        if (xmlhttp.status == 200) {
+                            document.body.innerHTML = xmlhttp.responseText;
+                            alert("ok")
+                        }
+                    }
+                }
+                // Send the POST request
+            xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+            xmlhttp.send(sr);
+            // send request
+            // ...
+        }
+    </script>
+</head>
+
+<body>
+    <form name="Demo" action="" method="post">
+        <div>
+            <input type="button" value="Soap" onclick="soap();" />
+        </div>
+    </form>
+</body>
+
+</html>

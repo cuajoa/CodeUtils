@@ -1,0 +1,1 @@
+C:/Python38/python.exe "g:/My Drive/Varios/Code/Python/Maradona.py"

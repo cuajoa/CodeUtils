@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Pruebas</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <div id="aplicacion">
+        <H1>{{mensaje}}</H1>
+        <input v-model="mensaje" type="text" />
+
+        <input v-model.number="valorA" type="number" step="1" />
+        <input v-model.number="valorB" type="number" step="1" />
+        <h1>{{suma()}}</h1>
+        <br />
+        <br />
+        <h1 v-if="(oportunidades==3)"> Ya realizaste tres tiros</h1>
+        <h1 v-else> Tiros {{ oportunidades }}</h1>
+        <h2>Jugador 1: {{jugador1}}</h2>
+        <h2>Jugador 2: {{jugador2}}</h2>
+        <h1> {{ganador }}</h1>
+        <input type="button" v-on:click="jugar" :disabled="oportunidades==3" value="Jugar" />
+        <input v-if="(oportunidades==3)" type="button" v-on:click="reiniciar" value="Reiniciar" />
+    </div>
+    <script type="text/javascript">
+        new Vue({
+            el: "#aplicacion",
+            data: {
+                mensaje: "Cargando data",
+                valorA: 1,
+                valorB: 1,
+                jugador1: 0,
+                jugador2: 0,
+                ganador: "--",
+                oportunidades: 0
+            },
+            methods: {
+                reiniciar: function(event) {
+                    this.oportunidades = 0;
+                },
+                suma: function() {
+                    return this.valorA + this.valorB
+                },
+                jugar: function(event) {
+                    this.jugador1 = Math.round(Math.random() * 10);
+                    this.jugador2 = Math.round(Math.random() * 10);
+                    var mensaje = "Hay un empate";
+
+                    if (this.jugador1 > this.jugador2) {
+                        mensaje = "Gano Jugador 1";
+                    } else if (this.jugador2 > this.jugador1) {
+                        mensaje = "Gano Jugador 2";
+                    }
+                    this.oportunidades++;
+
+                    this.ganador = mensaje;
+
+                }
+            },
+
+        })
+    </script>
+
+</body>
+
+</html>

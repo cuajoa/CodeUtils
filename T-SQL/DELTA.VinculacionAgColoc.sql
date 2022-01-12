@@ -1,0 +1,10 @@
+DELETE FROM appFORMULARIOSAGCOLOC
+WHERE CodAgColocador IN (SELECT CodAgColocador FROM AGCOLOCADORES WHERE NumAgColocador > 24)
+
+
+-- VFNet + VFHome - Agentes Colocadores ACDI
+INSERT  appFORMULARIOSAGCOLOC (CodFormulario, CodAgColocador)
+SELECT  CodFormulario, CodAgColocador
+FROM    appFORMULARIOS, AGCOLOCADORES
+WHERE   NumAgColocador >= 24 AND CodFormulario in ('FRMLIQRESC_ACDI_VFN', 'FRMLIQSUSC_ACDI_VFN', 'FRMSOLRESC_ACDI_VFN', 'FRMSOLSUSC_ACDI_VFN',
+                                                 'FRMLIQRESC_ACDI_VFH', 'FRMLIQSUSC_ACDI_VFH', 'FRMSOLRESC_ACDI_VFH', 'FRMSOLSUSC_ACDI_VFH')
