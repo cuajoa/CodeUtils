@@ -1,5 +1,5 @@
 DECLARE @CodEntidad int
-SET @CodEntidad = 987, 951, 969 
+SET @CodEntidad = 987
 
 DELETE FROM dfxENTFILTROSUSER WHERE CodEntidad = @CodEntidad
 DELETE FROM dfxENTFILTROS WHERE CodEntidad = @CodEntidad

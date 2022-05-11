@@ -2,7 +2,7 @@
 
 DECLARE @name varchar(250)
 
-set @name = 'dbo.CTASCORRIENTESCMT'
+set @name = 'dbo.CTASBANCARIAS'
  
 DECLARE @LEVEL int
 DECLARE @COUNTAnt int
@@ -50,3 +50,5 @@ WHILE (@COUNTAnt <> @COUNT)
  
 SELECT referencing_entity_name, level FROM #DEPENCENDE
 ORDER BY level
+
+DROP TABLE #DEPENCENDE

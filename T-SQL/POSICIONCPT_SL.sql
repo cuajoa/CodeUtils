@@ -1,5 +1,7 @@
-DECLARE @Fecha smalldatetime = '20210202'
-DECLARE @NumCuotapartista numeric(15)=97221
+-- Nombre corto del
+-- fondo, Nombre de Cuotapartista, fecha, cantidad de cuotapartes, moneda, valuacion, cuit-cuil-cdi, cuotapartista numero, tipo de cuotaparte
+
+
 
 SELECT  FONDOS.CodInterfaz AS FondoID, FONDOS.NumFondo AS FondoNumero, FONDOS.Nombre AS FondoNombre, 
         TPVALORESCP.CodInterfaz  AS TipoVCPID, TPVALORESCP.Abreviatura AS TipoVCPAbreviatura, TPVALORESCP.Descripcion AS TipoVCPDescripcion, 
@@ -16,10 +18,10 @@ SELECT  FONDOS.CodInterfaz AS FondoID, FONDOS.NumFondo AS FondoNumero, FONDOS.No
                       INNER JOIN TPVALORESCP ON TPVALORESCP.CodFondo = LIQUIDACIONES.CodFondo And TPVALORESCP.CodTpValorCp = LIQUIDACIONES.CodTpValorCp  
                        INNER JOIN VALORESCP ON VALORESCP.CodFondo = LIQUIDACIONES.CodFondo And VALORESCP.CodTpValorCp = LIQUIDACIONES.CodTpValorCp 
                       AND VALORESCP.Fecha = (SELECT MAX(Fecha) FROM VALORESCP VAL2MAX WHERE VAL2MAX.CodFondo = VALORESCP.CodFondo 
-                 								And VAL2MAX.CodTpValorCp = VALORESCP.CodTpValorCp And VAL2MAX.Fecha <= @Fecha)  
+                 								And VAL2MAX.CodTpValorCp = VALORESCP.CodTpValorCp And VAL2MAX.Fecha <= GETDATE())  
                  	INNER JOIN CONDICIONESINGEGR on LIQUIDACIONES.CodFondo=CONDICIONESINGEGR.CodFondo  And LIQUIDACIONES.CodCondicionIngEgr =  CONDICIONESINGEGR.CodCondicionIngEgr
                     LEFT  JOIN(SELECT  CPTBLOQUEOS.CodFondo, CPTBLOQUEOS.CodTpValorCp, CPTBLOQUEOS.CodCuotapartista, SUM(CPTBLOQUEOS.CantidadCuotapartes) AS CuotapartesBloqueadas  
-                              From CPTBLOQUEOS Where CPTBLOQUEOS.FechaBloqueo <= DateAdd(Day, DateDiff(Day, 0, @Fecha), 0)
+                              From CPTBLOQUEOS Where CPTBLOQUEOS.FechaBloqueo <= DateAdd(Day, DateDiff(Day, 0, GETDATE()), 0)
                              Group By CPTBLOQUEOS.CodFondo, CPTBLOQUEOS.CodTpValorCp, CPTBLOQUEOS.CodCuotapartista) AS BLOQUEOS  
                         On BLOQUEOS.CodFondo = LIQUIDACIONES.CodFondo And BLOQUEOS.CodTpValorCp = LIQUIDACIONES.CodTpValorCp And BLOQUEOS.CodCuotapartista = LIQUIDACIONES.CodCuotapartista  
                  		INNER JOIN AGCOLOCADORES  ON LIQUIDACIONES.CodAgColocador = AGCOLOCADORES.CodAgColocador 
@@ -28,8 +30,7 @@ SELECT  FONDOS.CodInterfaz AS FondoID, FONDOS.NumFondo AS FondoNumero, FONDOS.No
                  			AND OFICIALESCTA.CodOficialCta = LIQUIDACIONES.CodOficialCta 
                  			AND OFICIALESCTA.CodAgColocador = CUOTAPARTISTAS.CodAgColocadorOfCta  
                  			AND AGCOLOCADORES.CodAgColocador = CUOTAPARTISTAS.CodAgColocador 
-        WHERE NumCuotapartista=@NumCuotapartista
-         AND	LIQUIDACIONES.EstaAnulado = 0 AND LIQUIDACIONES.FechaConcertacion <= @Fecha 
+        WHERE LIQUIDACIONES.EstaAnulado = 0 AND LIQUIDACIONES.FechaConcertacion <= GETDATE() 
          AND FONDOS.EstaAnulado = 0 
          AND CONDICIONESINGEGR.EstaAnulado = 0 
         GROUP BY   FONDOS.CodInterfaz, FONDOS.NumFondo, FONDOS.Nombre, 
